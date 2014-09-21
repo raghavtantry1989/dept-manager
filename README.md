@@ -1,3 +1,13 @@
+# Store Manager 
+
+This project is a simple application to manage the billing requirements of all small stores.
+This initiative will help the small shops to solve their daily billing problems and help them
+to replce their manual canculation problems.
+
+The Goal pf our project is to provide the simplest billing solution and the application should 
+be error free.
+
+This broject is built on top of angulat-seed project, which is listed below. 
 # angular-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
