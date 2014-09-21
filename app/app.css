@@ -28,3 +28,8 @@
   content: "";
   padding: 0;
 }
+
+.ui-select-bootstrap button,
+.ui-select-bootstrap input{
+  height:46px;
+}

@@ -11,28 +11,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="app.css"/>
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
+  <!-- <ul class="menu">
     <li><a href="#/view1">view1</a></li>
     <li><a href="#/view2">view2</a></li>
-  </ul>
+  </ul> -->
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ng-view></div>
+<!--   <div ng-view></div> -->
+  <header>
+    <div class="page-header text-center">
+        <h1 class="store-name">Dept Store</h1>
+    </div>
+  </header>
+  <div class="main container" ng-controller="ProductController">
+    <div class="row">
+      <div>
+        <form class="selection-wrapper col-md-12">
+          <div class="col-md-6">
+            <ui-select ng-model="products.selected"
+                   theme="bootstrap"
+                   ng-disabled=""
+                   reset-search-input="false" ng-change="change()">
+            <ui-select-match placeholder="{{placeholder}}">{{$select.selected.productName}}</ui-select-match>
+            <ui-select-choices repeat="product in products | filter: $select.search">
+              <div ng-bind-html="product.productName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          </div>
+          
+          <div class="form-group col-md-2">
+            <div class="input-group">
+                <input id="quantity" class="form-control input-lg" placeholder="" ng-model="products.selected.quantity">
+                <div class="input-group-addon">{{products.selected.quantityUnit}}</div>
+            </div>
+          </div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+          <div class="form-group col-md-2">
+            <div class="input-group">
+                <input id="unitPrice" class="form-control input-lg" ng-model="products.selected.unitPrice">
+                <div class="input-group-addon">&#8377</div>
+            </div>
+          </div>
 
+          <button class="btn btn-success btn-lg col-md-2" ng-click="add(products.selected)">Add</button>
+        </form>
+        <!--   <p>{{products.selected}}</p> -->
+      </div>
+    </div>
+
+    <!-- Control Buttons -->
+    <div class="row">
+      <div class="col-md-1 col-md-offset-10">
+        <button class="btn btn-link">Delete</button>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary">Edit</button>
+      </div>
+    </div>
+    <!-- End of Control Buttons -->
+
+    <div class="row">
+       <table class="table table-striped col-md-12">
+            <thead>
+              <tr>
+                  <td>Select</td>
+                  <td>#</td>
+                  <td>Unit Price</td>
+                  <td>Price</td>
+                  <td>Product Name</td>
+                  <td>Quantity</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in addedProducts track by $index">
+                  <td><input type="checkbox"></td>
+                  <td>{{$index+1}}</td>
+                  <td>{{item.unitPrice}}</td>
+                  <td>{{item.unitPrice * item.quantity | currency : "Rs "}}</td>
+                  <td>{{item.productName}}</td>
+                  <td>{{item.quantity}}{{item.quantityUnit}}</td>
+              </tr>
+              <!-- <tfoot>
+                <td colspan="5">Total Price : </td>
+              </tfoot> -->
+            </tbody>
+        </table>
+    </div>
+   <hr/>
+    
+    
+  </div> <!--  End Of Main -->
+  
+  
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+  <script src="bower_components/ng-grid/build/ng-grid.js"> </script>
+
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
