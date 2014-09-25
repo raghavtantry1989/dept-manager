@@ -29,7 +29,14 @@
   padding: 0;
 }
 
+
 .ui-select-bootstrap button,
 .ui-select-bootstrap input{
   height:46px;
+}
+.ng-valid.ng-dirty{
+  border-color: green;
+}
+.ng-invalid.ng-dirty{
+  border-color:red;
 }

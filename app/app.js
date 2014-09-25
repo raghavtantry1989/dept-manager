@@ -47,7 +47,7 @@ app.filter('propsFilter', function() {
 });
 
 // Controllers
-app.controller('ProductController',function($scope){
+app.controller('ProductController',function($scope,$compile){
 	$scope.addedProducts=[];
 	
 	$scope.disabled = false;
@@ -72,6 +72,8 @@ app.controller('ProductController',function($scope){
 		$scope.addedProducts.push(item);
 		// $scope.gridOptions =  { data: 'addedProducts' };
 		$scope.isTableVisible = true;
+        $scope.products.selected={};
+        $scope.itemSelectionForm.$setPristine();
 	}
 	$scope.change=function(){
 		console.log("What");
@@ -86,63 +88,63 @@ app.controller('ProductController',function($scope){
 var productList=[
     {
         "productName":"Sugar",
-        "unitPrice":"31",
+        "unitPrice":31,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Shengdana",
-        "unitPrice":"60",
+        "unitPrice":60,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Harbhara Dal",
-        "unitPrice":"40",
+        "unitPrice":40,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Turdal",
-        "unitPrice":"76",
+        "unitPrice":76,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"MoongDal",
-        "unitPrice":"96",
+        "unitPrice":96,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Mutki Dal",
-        "unitPrice":"84",
+        "unitPrice":84,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Udit Dal",
-        "unitPrice":"84",
+        "unitPrice":84,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Mutki",
-        "unitPrice":"70",
+        "unitPrice":70,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
     },
     {
         "productName":"Vatana",
-        "unitPrice":"60",
+        "unitPrice":60,
         "quantityUnit":"kg",
         "productCategory":"Home Eatable",
         "productCode":""
