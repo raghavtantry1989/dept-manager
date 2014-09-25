@@ -8,7 +8,8 @@ var app = angular.module('myApp', [
   'myApp.version',
   'ngSanitize',
   'ui.select',
-  'ngGrid'
+  'ngGrid',
+  'ngTable'
 ]);
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});
@@ -53,6 +54,7 @@ app.controller('ProductController',function($scope,$compile){
 	$scope.disabled = false;
 	$scope.products = productList;
 	$scope.placeholder = "Select a product to add";
+    $scope.grandTotal;
 
 	$scope.enable = function() {
 	$scope.disabled = false;
@@ -77,9 +79,7 @@ app.controller('ProductController',function($scope,$compile){
 	}
 	$scope.change=function(){
 		console.log("What");
-		angular.element("quantity").focus();
 	};
-	
 	
 });
 

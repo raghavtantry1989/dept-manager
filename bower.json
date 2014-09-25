@@ -12,7 +12,9 @@
     "angular-mocks": "~1.2.x",
     "angular-ui-select":"~0.7.0",
     "angular-sanitize":"~1.2.18",
+    "angular-i18n":"",
     "ng-grid":"~2.0.x",
+    "ng-table":"~0.3.2",
     "bootstrap":"~3.2.0",
     "html5-boilerplate": "~4.3.0"
   }

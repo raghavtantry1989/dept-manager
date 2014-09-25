@@ -64,9 +64,9 @@
           </div>
 
           <button type="submit" class="btn btn-success btn-lg col-md-2" ng-class="{disabled: !itemSelectionForm.$valid}">Add</button>
-          <!-- {{itemSelectionForm.$valid}}
+          {{itemSelectionForm.$valid}}
           <p>Pristine: {{form.$pristine}}</p>
-          {{products.selected}} -->
+          {{products.selected}}
         </form>
         <!--   <p>{{products.selected}}</p> -->
       </div>
@@ -97,18 +97,24 @@
             </thead>
             <tbody>
               <tr ng-repeat="item in addedProducts track by $index">
-                  <td><input type="checkbox"></td>
+                  <td><input type="checkbox" ng-model="editable"></td>
                   <td>{{$index+1}}</td>
-                  <td>{{item.unitPrice}}</td>
+                  <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>
                   <td>{{item.unitPrice * item.quantity | currency : "Rs "}}</td>
                   <td>{{item.productName}}</td>
-                  <td>{{item.quantity}}{{item.quantityUnit}}</td>
+                  <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">{{item.quantityUnit}}</td>
               </tr>
-              <!-- <tfoot>
+              <tfoot>
                 <td colspan="5">Total Price : </td>
-              </tfoot> -->
+              </tfoot>
             </tbody>
         </table>
+       <!--  <table ng-table class="table">
+          <tr ng-repeat="item in addedProducts track by $index">
+              <td data-title="'Product Name'">{{item.productName}}</td>
+              <td data-title="'Quantity'">{{item.quantity}}</td>
+          </tr>
+          </table> -->
     </div>
    <hr/>
     
@@ -121,10 +127,13 @@
   -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="https://code.angularjs.org/1.2.25/i18n/angular-locale_en-mh.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  
   <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
   <script src="bower_components/ng-grid/build/ng-grid.js"> </script>
+  <script src="bower_components/ng-table/ng-table.js"> </script>
 
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
