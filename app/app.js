@@ -50,25 +50,13 @@ app.filter('propsFilter', function() {
 // Controllers
 app.controller('ProductController',function($scope,$compile){
 	$scope.addedProducts=[];
-	
-	$scope.disabled = false;
+
 	$scope.products = productList;
 	$scope.placeholder = "Select a product to add";
     $scope.grandTotal;
+  $scope.isTableVisible = false; 
 
-	$scope.enable = function() {
-	$scope.disabled = false;
-	};
-
-	$scope.disable = function() {
-	$scope.disabled = true;
-	};
-	// $scope.myData = [{name: "Moroni", age: 50},
- //                     {name: "Tiancum", age: 43},
- //                     {name: "Jacob", age: 27},
- //                     {name: "Nephi", age: 29},
- //                     {name: "Enos", age: 34}];
-
+	
 	$scope.add=function(item){
 		console.log(item);
 		$scope.addedProducts.push(item);
@@ -77,12 +65,27 @@ app.controller('ProductController',function($scope,$compile){
         $scope.products.selected={};
         $scope.itemSelectionForm.$setPristine();
 	}
-	$scope.change=function(){
-		console.log("What");
-	};
 	
 });
 
+
+// Controller to display table of selected products in detail
+app.controller('TableController',function($scope){
+  
+  $scope.removeFromCart = function(index){
+    $scope.addedProducts.splice(index,1);
+  };
+  
+  $scope.totalAmount = function(){
+    var total = 0;
+    for (var i=0, len = $scope.addedProducts.length; i< len; i++ ){
+      total = total + ($scope.addedProducts[i].quantity * $scope.addedProducts[i].unitPrice);
+    }
+
+    return total;
+  };
+
+});
 
 
 var productList=[

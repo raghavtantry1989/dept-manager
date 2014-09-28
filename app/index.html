@@ -41,7 +41,7 @@
             <ui-select ng-model="products.selected"
                    theme="bootstrap"
                    ng-disabled=""
-                   reset-search-input="false" ng-change="change()" placeholder="{{placeholder}}">
+                   reset-search-input="false" placeholder="{{placeholder}}">
             <ui-select-match placeholder="{{placeholder}}">{{$select.selected.productName}}</ui-select-match>
             <ui-select-choices repeat="product in products | filter: $select.search">
               <div ng-bind-html="product.productName | highlight: $select.search"></div>
@@ -64,26 +64,12 @@
           </div>
 
           <button type="submit" class="btn btn-success btn-lg col-md-2" ng-class="{disabled: !itemSelectionForm.$valid}">Add</button>
-          {{itemSelectionForm.$valid}}
-          <p>Pristine: {{form.$pristine}}</p>
-          {{products.selected}}
         </form>
         <!--   <p>{{products.selected}}</p> -->
       </div>
     </div>
 
-    <!-- Control Buttons -->
-    <div class="row">
-      <div class="col-md-1 col-md-offset-10">
-        <button class="btn btn-link">Delete</button>
-      </div>
-      <div class="col-md-1">
-        <button class="btn btn-primary">Edit</button>
-      </div>
-    </div>
-    <!-- End of Control Buttons -->
-
-    <div class="row">
+    <div class="row" ng-controller="TableController" ng-show="isTableVisible">
        <table class="table table-striped col-md-12">
             <thead>
               <tr>
@@ -93,6 +79,7 @@
                   <td>Price</td>
                   <td>Product Name</td>
                   <td>Quantity</td>
+                  <td>Settings</td>
               </tr>
             </thead>
             <tbody>
@@ -103,18 +90,16 @@
                   <td>{{item.unitPrice * item.quantity | currency : "Rs "}}</td>
                   <td>{{item.productName}}</td>
                   <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">{{item.quantityUnit}}</td>
+                  <td>
+                    <button class="btn btn-link" ng-click="removeFromCart($index)">Delete</button>
+                    <button class="btn btn-primary">Edit</button>
+                  </td>
               </tr>
               <tfoot>
-                <td colspan="5">Total Price : </td>
+                <td colspan="5">Total Price : {{totalAmount() | currency}}</td>
               </tfoot>
             </tbody>
         </table>
-       <!--  <table ng-table class="table">
-          <tr ng-repeat="item in addedProducts track by $index">
-              <td data-title="'Product Name'">{{item.productName}}</td>
-              <td data-title="'Quantity'">{{item.quantity}}</td>
-          </tr>
-          </table> -->
     </div>
    <hr/>
     
