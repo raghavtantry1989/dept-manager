@@ -48,22 +48,21 @@ app.filter('propsFilter', function() {
 });
 
 // Controllers
-app.controller('ProductController',function($scope,$compile){
+app.controller('ProductController',function($scope){
 	$scope.addedProducts=[];
 
 	$scope.products = productList;
-	$scope.placeholder = "Select a product to add";
-    $scope.grandTotal;
-  $scope.isTableVisible = false; 
 
+  $scope.config ={
+    placeholder    : 'Select a product to add',
+    isTableVisible : false
+  };
 	
 	$scope.add=function(item){
-		console.log(item);
-		$scope.addedProducts.push(item);
-		// $scope.gridOptions =  { data: 'addedProducts' };
-		$scope.isTableVisible = true;
-        $scope.products.selected={};
-        $scope.itemSelectionForm.$setPristine();
+		$scope.addedProducts.push(item);                
+		$scope.config.isTableVisible = true;                  // Make the table visible
+    $scope.products.selected={};                   // Reset the selected object to clear the form inputs
+    $scope.itemSelectionForm.$setPristine();       // Reset the angular form variable
 	}
 	
 });

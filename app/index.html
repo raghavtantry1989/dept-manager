@@ -41,8 +41,8 @@
             <ui-select ng-model="products.selected"
                    theme="bootstrap"
                    ng-disabled=""
-                   reset-search-input="false" placeholder="{{placeholder}}">
-            <ui-select-match placeholder="{{placeholder}}">{{$select.selected.productName}}</ui-select-match>
+                   reset-search-input="false" placeholder="{{config.placeholder}}">
+            <ui-select-match placeholder="{{config.placeholder}}">{{$select.selected.productName}}</ui-select-match>
             <ui-select-choices repeat="product in products | filter: $select.search">
               <div ng-bind-html="product.productName | highlight: $select.search"></div>
             </ui-select-choices>
@@ -52,7 +52,7 @@
           <div class="form-group col-md-2">
             <div class="input-group">
                 <input id="quantity" class="form-control input-lg" ng-focus="true" placeholder="" required="true" type="number" ng-model="products.selected.quantity">
-                <div class="input-group-addon">{{products.selected.quantityUnit}}</div>
+                <div class="input-group-addon" ng-bind="products.selected.quantityUnit"></div>
             </div>
           </div>
 
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div class="row" ng-controller="TableController" ng-show="isTableVisible">
+    <div class="row" ng-controller="TableController" ng-show="config.isTableVisible">
        <table class="table table-striped col-md-12">
             <thead>
               <tr>
@@ -87,12 +87,12 @@
                   <td><input type="checkbox" ng-model="editable"></td>
                   <td>{{$index+1}}</td>
                   <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>
-                  <td>{{item.unitPrice * item.quantity | currency : "Rs "}}</td>
+                  <td>{{item.unitPrice * item.quantity | currency}}</td>
                   <td>{{item.productName}}</td>
                   <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">{{item.quantityUnit}}</td>
                   <td>
                     <button class="btn btn-link" ng-click="removeFromCart($index)">Delete</button>
-                    <button class="btn btn-primary">Edit</button>
+                    <!-- <button class="btn btn-primary">Edit</button> -->
                   </td>
               </tr>
               <tfoot>
@@ -112,7 +112,7 @@
   -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
-  <script src="https://code.angularjs.org/1.2.25/i18n/angular-locale_en-mh.js"></script>
+  <script src="bower_components/angular-i18n/angular-locale_en-mh.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   
