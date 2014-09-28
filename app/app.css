@@ -29,7 +29,7 @@
   padding: 0;
 }
 
-
+/*Custom*/
 .ui-select-bootstrap button,
 .ui-select-bootstrap input{
   height:46px;
@@ -46,4 +46,16 @@
   border: 1px transparent;
   box-shadow: none;
   cursor: default !important;
+}
+
+tbody .form-control{
+  
+
+}
+@media print{
+  .product-selection-wrapper,
+  .control-options,
+  header{
+    display:none;
+  }
 }

@@ -34,10 +34,10 @@
     </div>
   </header>
   <div class="main container" ng-controller="ProductController">
-    <div class="row">
+    <div class="row product-selection-wrapper">
       <div>
-        <form name="itemSelectionForm" class="selection-wrapper col-md-12" novalidate ng-submit="itemSelectionForm.$valid && add(products.selected)">
-          <div class="col-md-6">
+        <form name="itemSelectionForm" class="selection-wrapper col-xs-12" novalidate ng-submit="itemSelectionForm.$valid && add(products.selected)">
+          <div class="col-xs-6">
             <ui-select ng-model="products.selected"
                    theme="bootstrap"
                    ng-disabled=""
@@ -49,28 +49,28 @@
           </ui-select>
           </div>
           
-          <div class="form-group col-md-2">
+          <div class="form-group col-xs-2">
             <div class="input-group">
                 <input id="quantity" class="form-control input-lg" ng-focus="true" placeholder="" required="true" type="number" ng-model="products.selected.quantity">
                 <div class="input-group-addon" ng-bind="products.selected.quantityUnit"></div>
             </div>
           </div>
 
-          <div class="form-group col-md-2">
+          <div class="form-group col-xs-2">
             <div class="input-group">
                 <input id="unitPrice" class="form-control input-lg" required="true" type="number" ng-model="products.selected.unitPrice">
                 <div class="input-group-addon">&#8377</div>
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success btn-lg col-md-2" ng-class="{disabled: !itemSelectionForm.$valid}">Add</button>
+          <button type="submit" class="btn btn-success btn-lg col-xs-2" ng-class="{disabled: !itemSelectionForm.$valid}">Add</button>
         </form>
         <!--   <p>{{products.selected}}</p> -->
       </div>
     </div>
 
-    <div class="row" ng-controller="TableController" ng-show="config.isTableVisible">
-       <table class="table table-striped col-md-12">
+    <div class="row table-wrapper" ng-controller="TableController" ng-show="config.isTableVisible">
+       <table class="table table-striped col-xs-12">
             <thead>
               <tr>
                   <td>Select</td>
@@ -79,7 +79,7 @@
                   <td>Price</td>
                   <td>Product Name</td>
                   <td>Quantity</td>
-                  <td>Settings</td>
+                  <td class="control-options">Settings</td>
               </tr>
             </thead>
             <tbody>
@@ -89,9 +89,14 @@
                   <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>
                   <td>{{item.unitPrice * item.quantity | currency}}</td>
                   <td>{{item.productName}}</td>
-                  <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">{{item.quantityUnit}}</td>
                   <td>
-                    <button class="btn btn-link" ng-click="removeFromCart($index)">Delete</button>
+                    <div class="">
+                      <input class="form-control" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">
+                      <div class="">{{item.quantityUnit}}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-link control-options" ng-click="removeFromCart($index)">Delete</button>
                     <!-- <button class="btn btn-primary">Edit</button> -->
                   </td>
               </tr>

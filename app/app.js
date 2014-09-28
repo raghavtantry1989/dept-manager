@@ -72,6 +72,7 @@ app.controller('ProductController',function($scope){
 app.controller('TableController',function($scope){
   
   $scope.removeFromCart = function(index){
+    $scope.config.isTableVisible = index;
     $scope.addedProducts.splice(index,1);
   };
   
