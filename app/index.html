@@ -73,27 +73,25 @@
        <table class="table table-striped col-xs-12">
             <thead>
               <tr>
-                  <td>Select</td>
-                  <td>#</td>
-                  <td>Unit Price</td>
-                  <td>Price</td>
-                  <td>Product Name</td>
-                  <td>Quantity</td>
-                  <td class="control-options">Settings</td>
+                  <th class="itemSelection col-md-1">Select</th>
+                  <th class="col-md-1">#</th>
+                  <th class="col-md-1">Unit Price</th>
+                  <th class="col-md-2">Price</th>
+                  <th class="col-md-3">Product Name</th>
+                  <th class="col-md-2">Quantity</th>
+                  <th class="col-md-2 control-options">Settings</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="item in addedProducts track by $index">
-                  <td><input type="checkbox" ng-model="editable"></td>
+                  <td class="itemSelection"><input type="checkbox" ng-model="editable"></td>
                   <td>{{$index+1}}</td>
-                  <td><input class="form-control" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>
+                  <td><input class="unitPriceOfItem" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>
                   <td>{{item.unitPrice * item.quantity | currency}}</td>
                   <td>{{item.productName}}</td>
                   <td>
-                    <div class="">
-                      <input class="form-control" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">
-                      <div class="">{{item.quantityUnit}}</div>
-                    </div>
+                      <input class="quantityOfItem" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">
+                      <span class="">{{item.quantityUnit}}</span>
                   </td>
                   <td>
                     <button class="btn btn-link control-options" ng-click="removeFromCart($index)">Delete</button>
@@ -101,7 +99,13 @@
                   </td>
               </tr>
               <tfoot>
-                <td colspan="5">Total Price : {{totalAmount() | currency}}</td>
+                <td></td>
+                <td></td>
+                <td>Total Price : </td>
+                <th>{{totalAmount() | currency}}</th>
+                <td></td>
+                <td></td>
+                <td></td>
               </tfoot>
             </tbody>
         </table>

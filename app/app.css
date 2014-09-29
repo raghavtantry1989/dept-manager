@@ -42,20 +42,33 @@
 }
 .disabled-input{
   outline: 0;
-  background-color: #f9f9f9 !important;
+  background-color: transparent !important;
   border: 1px transparent;
   box-shadow: none;
   cursor: default !important;
 }
 
-tbody .form-control{
-  
-
+/* Table */
+.quantityOfItem{
+  width:50px;
+  text-align: right;
 }
+.unitPriceOfItem{
+  width:70px;
+  text-align: right;
+}
+
+
+/* Print Styles */
 @media print{
   .product-selection-wrapper,
   .control-options,
-  header{
+  header,
+  .itemSelection{
     display:none;
+  }
+
+  input{
+    border: none;
   }
 }
