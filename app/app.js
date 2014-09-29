@@ -15,6 +15,11 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});
 }]);
 
+// Services
+app.service('productService',function(){
+  this.addedProducts=[];
+})
+
 //Filters
 app.filter('propsFilter', function() {
   return function(items, props) {
@@ -48,7 +53,7 @@ app.filter('propsFilter', function() {
 });
 
 // Controllers
-app.controller('ProductController',function($scope){
+app.controller('ProductController',function($scope, productService){
 	$scope.addedProducts=[];
 
 	$scope.products = productList;
@@ -59,11 +64,23 @@ app.controller('ProductController',function($scope){
   };
 	
 	$scope.add=function(item){
-		$scope.addedProducts.push(item);                
+    if( avoidDuplicate(item)){
+      $scope.addedProducts.unshift(item);  
+    }
 		$scope.config.isTableVisible = true;                  // Make the table visible
     $scope.products.selected={};                   // Reset the selected object to clear the form inputs
     $scope.itemSelectionForm.$setPristine();       // Reset the angular form variable
 	}
+
+  var avoidDuplicate=function(item){
+    for (var i=0, len = $scope.addedProducts.length; i< len; i++ ){
+      if(item.productName == $scope.addedProducts[i]){
+        return false;
+      }
+    }
+    return true;
+
+  };
 	
 });
 
