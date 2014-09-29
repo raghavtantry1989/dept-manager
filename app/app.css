@@ -61,11 +61,11 @@
 
 /* Print Styles */
 @media print{
+  header,
   .product-selection-wrapper,
   .control-options,
-  header,
   .itemSelection{
-    display:none;
+    display:none !important;
   }
 
   input{
