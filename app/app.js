@@ -16,9 +16,24 @@ app.config(['$routeProvider', function($routeProvider) {
 }]);
 
 // Services
+// Services
 app.service('productService',function(){
-  this.addedProducts=[];
-})
+  var products = productList;
+  var itemsInCart = [];
+
+  this.getInventory = function(){
+    return products;
+  };
+
+  this.getCart = function(){
+    return itemsInCart;
+  };
+
+  this.addToCart = function(item){
+    itemsInCart.unshift(item);
+  };
+
+});
 
 //Filters
 app.filter('propsFilter', function() {
@@ -105,68 +120,195 @@ app.controller('TableController',function($scope){
 });
 
 
-var productList=[
+var productList =[
     {
-        "productName":"Sugar",
-        "unitPrice":31,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "साखर",
+        "englishTranslation": "Sakhar",
+        "unitPrice": 31,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "HomeEatables",
+        "productCode": null,
+        "Priority": 1
     },
     {
-        "productName":"Shengdana",
-        "unitPrice":60,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "शेंगदाणे जाडा",
+        "englishTranslation": "Shengdana",
+        "unitPrice": 60,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "HomeEatables",
+        "productCode": null,
+        "Priority": 1
     },
     {
-        "productName":"Harbhara Dal",
-        "unitPrice":40,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "हरभरा डाळ",
+        "englishTranslation": "harbhara dal",
+        "unitPrice": 40,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
     },
     {
-        "productName":"Turdal",
-        "unitPrice":76,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "तूर डाळ",
+        "englishTranslation": "tur dal",
+        "unitPrice": 76,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
     },
     {
-        "productName":"MoongDal",
-        "unitPrice":96,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "मुग डाळ",
+        "englishTranslation": "mug dal",
+        "unitPrice": 96,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
     },
     {
-        "productName":"Mutki Dal",
-        "unitPrice":84,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "मटकी डाळ",
+        "englishTranslation": "Mataki dal",
+        "unitPrice": 84,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
     },
     {
-        "productName":"Udit Dal",
-        "unitPrice":84,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "उडीद डाळ",
+        "englishTranslation": "Udid dal",
+        "unitPrice": 84,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
     },
     {
-        "productName":"Mutki",
-        "unitPrice":70,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "मटकी",
+        "englishTranslation": "Mataki ",
+        "unitPrice": 70,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
     },
     {
-        "productName":"Vatana",
-        "unitPrice":60,
-        "quantityUnit":"kg",
-        "productCategory":"Home Eatable",
-        "productCode":""
+        "productName": "वटाणा",
+        "englishTranslation": "Vatana",
+        "unitPrice": 60,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Dal",
+        "productCode": null,
+        "Priority": 2
+    },
+    {
+        "productName": "गुळ",
+        "englishTranslation": "Gul",
+        "unitPrice": 40,
+        "marathiPrice": "",
+        "quantityUnit": "Kg",
+        "productCategory": "Sweets",
+        "productCode": null,
+        "Priority": 3
+    },
+    {
+        "productName": "क पोहे",
+        "englishTranslation": "K Pohe",
+        "unitPrice": 34,
+        "marathiPrice": "३४",
+        "quantityUnit": "Kg",
+        "productCategory": "Poha",
+        "productCode": null,
+        "Priority": 4
+    },
+    {
+        "productName": "पा पोहे",
+        "englishTranslation": "Pa pohe",
+        "unitPrice": 50,
+        "marathiPrice": "५०",
+        "quantityUnit": "Kg",
+        "productCategory": "Poha",
+        "productCode": null,
+        "Priority": 4
+    },
+    {
+        "productName": "चुरमुरे",
+        "englishTranslation": "Churmure",
+        "unitPrice": 44,
+        "marathiPrice": "४४",
+        "quantityUnit": "Kg",
+        "productCategory": "Poha",
+        "productCode": null,
+        "Priority": 4
+    },
+    {
+        "productName": "पे चुरमुरे",
+        "englishTranslation": "Packing Churmure",
+        "unitPrice": 45,
+        "marathiPrice": "४५",
+        "quantityUnit": "Kg",
+        "productCategory": "Poha",
+        "productCode": null,
+        "Priority": 4
+    },
+    {
+        "productName": "सु चुरमुरे",
+        "englishTranslation": "Surati Churmure",
+        "unitPrice": 60,
+        "marathiPrice": "६०",
+        "quantityUnit": "Kg",
+        "productCategory": "Poha",
+        "productCode": null,
+        "Priority": 4
+    },
+    {
+        "productName": "हि बेसन",
+        "englishTranslation": "Hira Besan",
+        "unitPrice": 50,
+        "marathiPrice": "५०",
+        "quantityUnit": "Kg",
+        "productCategory": "HomeEatables",
+        "productCode": null,
+        "Priority": 1
+    },
+    {
+        "productName": "प्र बेसन",
+        "englishTranslation": "Prakash Besan",
+        "unitPrice": 40,
+        "marathiPrice": "४०",
+        "quantityUnit": "Kg",
+        "productCategory": "HomeEatables",
+        "productCode": null,
+        "Priority": 1
+    },
+    {
+        "productName": "मैदा",
+        "englishTranslation": "Maida",
+        "unitPrice": 24,
+        "marathiPrice": "२४",
+        "quantityUnit": "Kg",
+        "productCategory": "HomeEatables",
+        "productCode": null,
+        "Priority": 1
+    },
+    {
+        "productName": "गरा",
+        "englishTranslation": "Gara",
+        "unitPrice": 24,
+        "marathiPrice": "२४",
+        "quantityUnit": "Kg",
+        "productCategory": "HomeEatables",
+        "productCode": null,
+        "Priority": 1
     }
 ];
