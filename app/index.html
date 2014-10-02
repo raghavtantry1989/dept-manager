@@ -83,7 +83,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in addedProducts track by $index">
+              <tr ng-repeat="item in productsInCart track by $index">
                   <td class="itemSelection"><input type="checkbox" ng-model="editable"></td>
                   <td>{{$index+1}}</td>
                   <td><input class="unitPriceOfItem" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>

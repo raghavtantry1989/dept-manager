@@ -37,6 +37,10 @@ app.factory('CartManager',function(){
     cart.addItems = function(item){
         cart.products.unshift(item);
     }
+
+    cart.removeItem = function(index){
+        cart.products.splice(index,1);
+    }
     return  cart;
 });
 
@@ -100,7 +104,6 @@ app.filter('propsFilter', function() {
 
 // Controllers
 app.controller('ProductController',function($scope, InventoryItems, CartManager){
-	$scope.addedProducts=[];
 
     InventoryItems.getItems().success(function(data){
         $scope.products=data;
@@ -112,27 +115,33 @@ app.controller('ProductController',function($scope, InventoryItems, CartManager)
   };
 	
 	$scope.add=function(item){
-      $scope.addedProducts.unshift(item);  
-		$scope.config.isTableVisible = true;                  // Make the table visible
-    $scope.products.selected={};                   // Reset the selected object to clear the form inputs
-    $scope.itemSelectionForm.$setPristine();       // Reset the angular form variable
+        CartManager.addItems(item);
+        $scope.config.isTableVisible = true;            // Make the table visible
+        $scope.products.selected={};                   // Reset the selected object to clear the form inputs
+        $scope.itemSelectionForm.$setPristine();       // Reset the angular form variable
+
+        //# To fetch the scope issue , fetch the json from the service again, 
+        InventoryItems.getItems().success(function(data){
+            $scope.products=data;
+        });
 	}
 	
 });
 
 
 // Controller to display table of selected products in detail
-app.controller('TableController',function($scope){
+app.controller('TableController',function($scope, CartManager){
+  $scope.productsInCart = CartManager.getItems();
   
   $scope.removeFromCart = function(index){
     $scope.config.isTableVisible = index;
-    $scope.addedProducts.splice(index,1);
+    CartManager.removeItem(index);
   };
   
   $scope.totalAmount = function(){
     var total = 0;
-    for (var i=0, len = $scope.addedProducts.length; i< len; i++ ){
-      total = total + ($scope.addedProducts[i].quantity * $scope.addedProducts[i].unitPrice);
+    for (var i=0, len = $scope.productsInCart.length; i< len; i++ ){
+      total = total + ($scope.productsInCart[i].quantity * $scope.productsInCart[i].unitPrice);
     }
 
     return total;
