@@ -15,7 +15,38 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});
 }]);
 
-// Services
+// Factory - Service to fetch the inventory list
+app.factory('InventoryItems',function($http){
+    var inventoryManager ={};
+
+    inventoryManager.getItems = function(){
+        return $http.get('service/products.json');    
+    };
+
+    return inventoryManager;
+});
+
+app.factory('CartManager',function(){
+    var cart = {};
+    cart.products=[];
+
+    cart.getItems = function(){
+        return cart.products;
+    };
+
+    cart.addItems = function(item){
+        cart.products.unshift(item);
+    }
+    return  cart;
+});
+
+app.controller('InventoryManagerTestController',function($scope, $http, InventoryItems){
+   InventoryItems.getItems().success(function(data){
+    console.log(data);
+    $scope.productList=data;
+   })
+});
+
 // Services
 app.service('productService',function(){
   var products = productList;
@@ -68,10 +99,12 @@ app.filter('propsFilter', function() {
 });
 
 // Controllers
-app.controller('ProductController',function($scope, productService){
+app.controller('ProductController',function($scope, InventoryItems, CartManager){
 	$scope.addedProducts=[];
 
-	$scope.products = productList;
+    InventoryItems.getItems().success(function(data){
+        $scope.products=data;
+    });
 
   $scope.config ={
     placeholder    : 'Select a product to add',
@@ -79,23 +112,11 @@ app.controller('ProductController',function($scope, productService){
   };
 	
 	$scope.add=function(item){
-    if( avoidDuplicate(item)){
       $scope.addedProducts.unshift(item);  
-    }
 		$scope.config.isTableVisible = true;                  // Make the table visible
     $scope.products.selected={};                   // Reset the selected object to clear the form inputs
     $scope.itemSelectionForm.$setPristine();       // Reset the angular form variable
 	}
-
-  var avoidDuplicate=function(item){
-    for (var i=0, len = $scope.addedProducts.length; i< len; i++ ){
-      if(item.productName == $scope.addedProducts[i]){
-        return false;
-      }
-    }
-    return true;
-
-  };
 	
 });
 
@@ -118,197 +139,3 @@ app.controller('TableController',function($scope){
   };
 
 });
-
-
-var productList =[
-    {
-        "productName": "साखर",
-        "englishTranslation": "Sakhar",
-        "unitPrice": 31,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "HomeEatables",
-        "productCode": null,
-        "Priority": 1
-    },
-    {
-        "productName": "शेंगदाणे जाडा",
-        "englishTranslation": "Shengdana",
-        "unitPrice": 60,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "HomeEatables",
-        "productCode": null,
-        "Priority": 1
-    },
-    {
-        "productName": "हरभरा डाळ",
-        "englishTranslation": "harbhara dal",
-        "unitPrice": 40,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "तूर डाळ",
-        "englishTranslation": "tur dal",
-        "unitPrice": 76,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "मुग डाळ",
-        "englishTranslation": "mug dal",
-        "unitPrice": 96,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "मटकी डाळ",
-        "englishTranslation": "Mataki dal",
-        "unitPrice": 84,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "उडीद डाळ",
-        "englishTranslation": "Udid dal",
-        "unitPrice": 84,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "मटकी",
-        "englishTranslation": "Mataki ",
-        "unitPrice": 70,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "वटाणा",
-        "englishTranslation": "Vatana",
-        "unitPrice": 60,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Dal",
-        "productCode": null,
-        "Priority": 2
-    },
-    {
-        "productName": "गुळ",
-        "englishTranslation": "Gul",
-        "unitPrice": 40,
-        "marathiPrice": "",
-        "quantityUnit": "Kg",
-        "productCategory": "Sweets",
-        "productCode": null,
-        "Priority": 3
-    },
-    {
-        "productName": "क पोहे",
-        "englishTranslation": "K Pohe",
-        "unitPrice": 34,
-        "marathiPrice": "३४",
-        "quantityUnit": "Kg",
-        "productCategory": "Poha",
-        "productCode": null,
-        "Priority": 4
-    },
-    {
-        "productName": "पा पोहे",
-        "englishTranslation": "Pa pohe",
-        "unitPrice": 50,
-        "marathiPrice": "५०",
-        "quantityUnit": "Kg",
-        "productCategory": "Poha",
-        "productCode": null,
-        "Priority": 4
-    },
-    {
-        "productName": "चुरमुरे",
-        "englishTranslation": "Churmure",
-        "unitPrice": 44,
-        "marathiPrice": "४४",
-        "quantityUnit": "Kg",
-        "productCategory": "Poha",
-        "productCode": null,
-        "Priority": 4
-    },
-    {
-        "productName": "पे चुरमुरे",
-        "englishTranslation": "Packing Churmure",
-        "unitPrice": 45,
-        "marathiPrice": "४५",
-        "quantityUnit": "Kg",
-        "productCategory": "Poha",
-        "productCode": null,
-        "Priority": 4
-    },
-    {
-        "productName": "सु चुरमुरे",
-        "englishTranslation": "Surati Churmure",
-        "unitPrice": 60,
-        "marathiPrice": "६०",
-        "quantityUnit": "Kg",
-        "productCategory": "Poha",
-        "productCode": null,
-        "Priority": 4
-    },
-    {
-        "productName": "हि बेसन",
-        "englishTranslation": "Hira Besan",
-        "unitPrice": 50,
-        "marathiPrice": "५०",
-        "quantityUnit": "Kg",
-        "productCategory": "HomeEatables",
-        "productCode": null,
-        "Priority": 1
-    },
-    {
-        "productName": "प्र बेसन",
-        "englishTranslation": "Prakash Besan",
-        "unitPrice": 40,
-        "marathiPrice": "४०",
-        "quantityUnit": "Kg",
-        "productCategory": "HomeEatables",
-        "productCode": null,
-        "Priority": 1
-    },
-    {
-        "productName": "मैदा",
-        "englishTranslation": "Maida",
-        "unitPrice": 24,
-        "marathiPrice": "२४",
-        "quantityUnit": "Kg",
-        "productCategory": "HomeEatables",
-        "productCode": null,
-        "Priority": 1
-    },
-    {
-        "productName": "गरा",
-        "englishTranslation": "Gara",
-        "unitPrice": 24,
-        "marathiPrice": "२४",
-        "quantityUnit": "Kg",
-        "productCategory": "HomeEatables",
-        "productCode": null,
-        "Priority": 1
-    }
-];
