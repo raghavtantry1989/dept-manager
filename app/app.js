@@ -71,6 +71,9 @@ app.filter('marathiNumerals',function(){
         else if(value == "0"){
             return "०";
         }
+        else if(value == '.'){
+          return ".";
+        }
     };
 
     return marathiNumeralsFilter;
