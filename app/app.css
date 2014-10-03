@@ -64,8 +64,34 @@ table{
 .table-wrapper{
   margin-top: 50px;
 }
-
-
+.ui-select-bootstrap>.ui-select-match,
+.ui-select-choices a div{
+  font-size: 18px;
+}
+/* Cart Styles */
+header{
+  position: relative;
+}
+.cart{
+  position: absolute;
+  right: 90px;
+  top: -15px;
+  font-size: 50px;
+  color:rgb(226, 86, 43);
+}
+.cart .badge{
+  position: absolute;
+  top: -8px;
+  left: 12px;
+}
+.print-button{
+  float:right;
+  width: 200px;
+}
+.reset-button{
+  float: right;
+  margin-right: 20px;
+}
 /* Print Styles */
 @media print{
   header,

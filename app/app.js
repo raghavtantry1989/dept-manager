@@ -81,17 +81,25 @@ app.filter('marathiNumerals',function(){
 app.factory('CartManager',function(){
     var cart = {};
     cart.products=[];
+    cart.count=0;
 
     cart.getItems = function(){
-        return cart.products;
+      return cart.products;
     };
 
     cart.addItems = function(item){
-        cart.products.unshift(item);
+      cart.count++;
+      cart.products.unshift(item);
     }
 
     cart.removeItem = function(index){
-        cart.products.splice(index,1);
+      cart.count--;
+      cart.products.splice(index,1);
+    }
+
+    cart.getCount = function(){
+      console.log("Raj" + cart.count);
+      return cart.count;
     }
     return  cart;
 });
@@ -163,10 +171,13 @@ app.controller('ProductController',function($scope, InventoryItems, CartManager)
 
   $scope.config ={
     placeholder    : 'Select a product to add',
-    isTableVisible : false
+    isTableVisible : false,
+    count:0
   };
 	
 	$scope.add=function(item){
+        //#Revisit
+        $scope.config.count = $scope.config.count+1;
         CartManager.addItems(item);
         $scope.config.isTableVisible = true;            // Make the table visible
         $scope.products.selected={};                   // Reset the selected object to clear the form inputs
@@ -180,13 +191,19 @@ app.controller('ProductController',function($scope, InventoryItems, CartManager)
 	
 });
 
+app.controller('CartController',function($scope, CartManager){
+  $scope.itemsInCart = CartManager.getCount();
+});
+
 
 // Controller to display table of selected products in detail
 app.controller('TableController',function($scope, CartManager){
   $scope.productsInCart = CartManager.getItems();
   
   $scope.removeFromCart = function(index){
-    $scope.config.isTableVisible = index;
+    //#Revisit
+        $scope.config.count = $scope.config.count-1;
+    //$scope.config.isTableVisible = index;
     CartManager.removeItem(index);
   };
   
