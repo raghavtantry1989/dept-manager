@@ -219,4 +219,8 @@ app.controller('TableController',function($scope, CartManager){
     return total;
   };
 
+  $scope.printBill = function(){
+    window.print();
+  }
+
 });
