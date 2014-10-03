@@ -57,6 +57,13 @@
   width:70px;
   text-align: right;
 }
+table{
+  font-size: 18px;
+  margin-top: 20px;
+}
+.table-wrapper{
+  margin-top: 50px;
+}
 
 
 /* Print Styles */

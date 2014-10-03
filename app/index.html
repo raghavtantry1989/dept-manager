@@ -70,14 +70,18 @@
     </div>
 
     <div class="row table-wrapper" ng-controller="TableController" ng-show="config.isTableVisible">
+      <div class="col-xs-12">
+        <button class="btn btn-default col-xs-offset-8 col-xs-1">Reset</button>
+        <button class="btn btn-primary btn-success col-xs-offset-1 col-xs-2">Print</button>
+      </div>
        <table class="table table-striped col-xs-12">
             <thead>
               <tr>
                   <th class="itemSelection col-md-1">Select</th>
                   <th class="col-md-1">#</th>
-                  <th class="col-md-1">Unit Price</th>
+                  <th class="col-md-2">Unit Price</th>
                   <th class="col-md-2">Price</th>
-                  <th class="col-md-3">Product Name</th>
+                  <th class="col-md-2">Product Name</th>
                   <th class="col-md-2">Quantity</th>
                   <th class="col-md-2 control-options">Settings</th>
               </tr>
@@ -85,12 +89,16 @@
             <tbody>
               <tr ng-repeat="item in productsInCart track by $index">
                   <td class="itemSelection"><input type="checkbox" ng-model="editable"></td>
-                  <td>{{$index+1}}</td>
-                  <td><input class="unitPriceOfItem" ng-class="{'disabled-input': !editable}" ng-model="item.unitPrice" ng-disabled="!editable"></td>
-                  <td>{{item.unitPrice * item.quantity | currency}}</td>
+                  <td>{{$index+1 | marathiNumerals}}</td>
+                  <td>
+                    <span ng-hide="editable">{{item.unitPrice | marathiNumerals}}</span>
+                    <input ng-show="editable" class="unitPriceOfItem" ng-model="item.unitPrice">
+                  </td>
+                  <td>{{item.unitPrice * item.quantity | marathiNumerals}}</td>
                   <td>{{item.productName}}</td>
                   <td>
-                      <input class="quantityOfItem" ng-class="{'disabled-input': !editable}" ng-disabled="!editable" ng-model="item.quantity">
+                      <span ng-hide="editable">{{item.quantity | marathiNumerals}}</span>
+                      <input ng-show="editable" class="quantityOfItem" ng-model="item.quantity">
                       <span class="">{{item.quantityUnit}}</span>
                   </td>
                   <td>
@@ -102,7 +110,9 @@
                 <td class="itemSelection"></td>
                 <td></td>
                 <td>Total Price : </td>
-                <th>{{totalAmount() | currency}}</th>
+                <td>
+                  <div>{{totalAmount() | marathiNumerals}}</div>
+                </td>
                 <td></td>
                 <td></td>
                 <td class="control-options"></td>

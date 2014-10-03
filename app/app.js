@@ -26,6 +26,58 @@ app.factory('InventoryItems',function($http){
     return inventoryManager;
 });
 
+
+// Filter
+app.filter('marathiNumerals',function(){
+  console.log("Insode Filter");
+    var marathiNumeralsFilter = function(input){
+        console.log(input);
+        var engNumbers = input.toString();
+        var convertedString = "";
+        for(var i=0 ; i< engNumbers.length; i++){
+            convertedString = convertedString + convertToMarathi(engNumbers[i]);
+        }
+        return convertedString;
+    }
+
+    var convertToMarathi = function(value){
+        if(value == '1'){
+            return "१";
+        }
+        else if(value == "2"){
+            return "२";
+        }
+        else if(value == "3"){
+            return "३";
+        }
+        else if(value == "4"){
+            return "४";
+        }
+        else if(value == "5"){
+            return "५";
+        }
+        else if(value == "6"){
+            return "६";
+        }
+        else if(value == "7"){
+            return "७";
+        }
+        else if(value == "8"){
+            return "८";
+        }
+        else if(value == "9"){
+            return "९";
+        }
+        else if(value == "0"){
+            return "०";
+        }
+    };
+
+    return marathiNumeralsFilter;
+
+});
+
+
 app.factory('CartManager',function(){
     var cart = {};
     cart.products=[];
