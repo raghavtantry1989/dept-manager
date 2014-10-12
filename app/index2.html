@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="bower_components/ng-grid/ng-grid.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="app.css"/>
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+  <!-- <ul class="menu">
+    <li><a href="#/view1">view1</a></li>
+    <li><a href="#/view2">view2</a></li>
+  </ul> -->
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+<!--   <div ng-view></div> -->
+
+  <div class="main container" ng-controller="ProductController">
+    <div class="row">
+      <header>
+        <div class="page-header text-center">
+            <h1 class="store-name">Dept Store</h1>
+            
+            <div class="cart">
+              <span class="badge">{{config.count}}</span>
+              <span class="glyphicon glyphicon-shopping-cart"></span>
+            </div>
+        </div>
+      </header>
+    </div>
+    <div class="row product-selection-wrapper">
+      <div>
+        <form name="itemSelectionForm" class="selection-wrapper col-xs-12" novalidate ng-submit="itemSelectionForm.$valid && add(products.selected)">
+          <div class="col-xs-6">
+            <ui-select ng-model="products.selected"
+                   theme="bootstrap"
+                   ng-disabled=""
+                   reset-search-input="false" placeholder="{{config.placeholder}}">
+            <ui-select-match placeholder="{{config.placeholder}}">{{$select.selected.productName}}</ui-select-match>
+            <ui-select-choices repeat="product in products | filter: $select.search">
+              <div ng-bind-html="product.productName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          </div>
+          
+          <div class="form-group col-xs-2">
+            <div class="input-group">
+                <input id="quantity" class="form-control input-lg" ng-focus="true" placeholder="" required="true" type="number" ng-model="products.selected.quantity">
+                <div class="input-group-addon" ng-bind="products.selected.quantityUnit"></div>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-2">
+            <div class="input-group">
+                <input id="unitPrice" class="form-control input-lg" required="true" type="number" ng-model="products.selected.unitPrice">
+                <div class="input-group-addon">&#8377</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success btn-lg col-xs-2" ng-class="{disabled: !itemSelectionForm.$valid}">Add</button>
+        </form>
+        <!--   <p>{{products.selected}}</p> -->
+      </div>
+    </div>
+
+    <div class="row table-wrapper" ng-controller="TableController" ng-show="config.isTableVisible">
+       <table class="table table-striped col-xs-12">
+            <thead>
+              <tr>
+                  <th class="itemSelection col-md-1">Select</th>
+                  <th class="col-md-1">#</th>
+                  <th class="col-md-2">Unit Price</th>
+                  <th class="col-md-2">Price</th>
+                  <th class="col-md-2">Product Name</th>
+                  <th class="col-md-2">Quantity</th>
+                  <th class="col-md-2 control-options">Settings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="control-options" colspan="7" >
+                  <button class="btn btn-lg btn-primary btn-success print-button" ng-click="printBill()">Print</button>
+                  <button class="btn btn-lg btn-default reset-button">Reset</button>
+                </td>
+              </tr>
+              <tr ng-repeat="item in productsInCart track by $index">
+                  <td class="itemSelection"><input type="checkbox" ng-model="editable"></td>
+                  <td>({{$index+1 | marathiNumerals}})</td>
+                  <td>
+                    <span ng-hide="editable">{{item.unitPrice | marathiNumerals}}</span>
+                    <input ng-show="editable" class="unitPriceOfItem" ng-model="item.unitPrice">
+                  </td>
+                  <td>{{item.unitPrice * item.quantity | marathiNumerals}}</td>
+                  <td>{{item.productName}}</td>
+                  <td>
+                      <span ng-hide="editable">{{item.quantity | marathiNumerals}}</span>
+                      <input ng-show="editable" class="quantityOfItem" ng-model="item.quantity">
+                      <span class="">{{item.quantityUnit}}</span>
+                  </td>
+                  <td>
+                    <button class="btn btn-link control-options" ng-click="removeFromCart($index)">Delete</button>
+                    <!-- <button class="btn btn-primary">Edit</button> -->
+                  </td>
+              </tr>
+              <tfoot>
+                <td class="itemSelection"></td>
+                <td></td>
+                <td>Total Price : </td>
+                <td>
+                  <div>{{totalAmount() | marathiNumerals}}</div>
+                </td>
+                <td></td>
+                <td></td>
+                <td class="control-options">
+                </td>
+                
+              </tfoot>
+            </tbody>
+        </table>
+        <div class="col-xs-12">
+         
+        </div>
+    </div>
+    
+    
+  </div> <!--  End Of Main -->
+  
+  
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-i18n/angular-locale_mr-in.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  
+  <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+  <script src="bower_components/ng-grid/build/ng-grid.js"> </script>
+  <script src="bower_components/ng-table/ng-table.js"> </script>
+
+  <script src="app2.js"></script>
+  <script src="view1/view1.js"></script>
+  <script src="view2/view2.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>

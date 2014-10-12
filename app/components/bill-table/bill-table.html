@@ -1,0 +1,49 @@
+<table class="table table-striped">
+  <thead>
+    <th></th>
+    <th>#</th>
+    <th>Product Name</th>
+    <th>Quanity</th>
+    <th>Unit Price</th>
+    <th>Total</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="hidden-print" colspan="6">
+        <button class="btn btn-lg btn-primary btn-success print-button" ng-click="printBill()">Print</button>
+        <button class="btn btn-lg btn-default reset-button" ng-click="reset()">Reset</button>
+      </td>
+    </tr>
+    <tr ng-repeat="item in cartItems">
+      <td><input type="checkbox" ng-model="isRowEditable"/></td>
+      <td>{{$index+1}}</td>
+      <td>{{item.productName}}</td>
+      <td>
+        <span ng-hide="isRowEditable">{{item.quantity | marathiNumerals}}</span>
+        <input class="quantityOfItem" ng-show="isRowEditable" ng-model="item.quantity"/>
+      </td>
+      <td>
+        <span ng-hide="isRowEditable">{{item.unitPrice | marathiNumerals}}</span>
+        <input class="unitPriceOfItem" ng-show="isRowEditable" ng-model="item.unitPrice"/>
+      </td>
+      <td>
+          {{item.quantity * item.unitPrice | marathiNumerals}}
+          <span class="settings-links" ng-show="isRowEditable">
+            <button class="btn btn-default" ng-click="deleteFromCart($index)">Delete</button>
+          </span>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>
+        {{totalAmount() | marathiNumerals}}
+      </th>
+    </tr>
+  </tfoot>
+</table>

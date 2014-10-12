@@ -1,0 +1,26 @@
+<form name="productSelectionForm" novalidate ng-submit="productSelectionForm.$valid && addToCart()">
+  <ui-select class="form-group col-md-5" ng-model="selectedProduct.selected" theme="bootstrap">
+    <ui-select-match placeholder="Select a product...">{{$select.selected.productName}}</ui-select-match>
+    <ui-select-choices repeat="product in productList | filter: $select.search">
+      <div ng-bind-html="product.productName | highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
+
+  <div class="form-group col-md-3">
+    <div class="input-group">
+      <input class="form-control input-lg" type="number" required ng-model="selectedProduct.selected.quantity" />
+      <div class="input-group-addon" ng-bind="selectedProduct.selected.quantityUnit || 'Kg'"></div>
+    </div>
+  </div>
+
+  <div class="form-group col-md-2">
+    <div class="input-group">
+      <input class="form-control input-lg" type="number" required ng-model="selectedProduct.selected.unitPrice" />
+      <div class="input-group-addon">&#8377</div>
+    </div>
+  </div>
+
+  <div class="form-group col-md-2">
+    <button class="btn btn-primary btn-lg col-md-12" ng-disabled="!productSelectionForm.$valid">Add</button>
+  </div>
+</form>

@@ -68,8 +68,12 @@ table{
 .ui-select-choices a div{
   font-size: 18px;
 }
+.settings-links{
+  float: right;
+}
 /* Cart Styles */
-header{
+header,
+.ui-select-match{
   position: relative;
 }
 .cart{
@@ -94,7 +98,7 @@ header{
 }
 /* Print Styles */
 @media print{
-  header,
+  .cart,
   .product-selection-wrapper,
   .control-options,
   .itemSelection{
